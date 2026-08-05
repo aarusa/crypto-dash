@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import CoinCard from "./components/CoinCard";
 import LimitSelector from "./components/LimitSelector";
+import FilterInput from "./components/FilterInput";
 const API_URL = import.meta.env.VITE_API_URL;
 
 const App = () => {
@@ -9,6 +10,7 @@ const App = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [limit, setLimit] = useState(10);
+  const [filter, setFilter] = useState('');
 
   useEffect(() => {
     // to create async function
@@ -39,7 +41,10 @@ const App = () => {
       { loading && <p>Loading...</p> }
       { error && <div className="error">{error}</div> }
 
-      <LimitSelector limit={limit} onLimitChange={setLimit} />
+      <div className="top-controls">
+        <FilterInput filter={filter} onFilterChange={setFilter} />
+        <LimitSelector limit={limit} onLimitChange={setLimit} />
+      </div>
 
       {!loading && !error && (
        <main className="grid">
